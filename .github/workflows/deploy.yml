@@ -1,0 +1,33 @@
+name: deployment assignment 1
+
+on: [push]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                python-version: ["3.14"]
+
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v5
+
+            - name: configuring aws credentials
+              uses: aws-actions/configure-aws-credentials@main
+              with: 
+                aws-region: us-east-1
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}  
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+            - name: zipping lambda code
+              run: |
+                zip -r lambda_function.py lambda_function.py.zip
+
+            - name: uploading to s3
+              run: |
+                aws s3 cp lambda_function.py.zip s3://amzn-s3-demo-bucket/gpt-assignment-1/
+
+            - name: updating lambda
+              run: |
+                update-function-code --function-name gpt-assignment-1 --zip-file lambda_function.py.zip
