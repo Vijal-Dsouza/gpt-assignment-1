@@ -30,4 +30,7 @@ jobs:
 
             - name: updating lambda
               run: |
-                aws lambda update-function-code --function-name gpt-assignment-1 --zip-file lambda_function.py.zip
+                aws lambda update-function-code \
+                --function-name gpt-assignment-1  \
+                --s3-bucket s3://gpt-assignment-1 \
+                --s3-key lambda_function.py.zip
