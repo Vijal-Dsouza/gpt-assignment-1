@@ -22,7 +22,7 @@ jobs:
 
             - name: zipping lambda code
               run: |
-                zip -r lambda_function.py lambda_function.py.zip
+                zip -r lambda_function.py.zip lambda_function.py
 
             - name: uploading to s3
               run: |
