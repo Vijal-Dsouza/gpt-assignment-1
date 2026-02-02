@@ -26,7 +26,7 @@ jobs:
 
             - name: uploading to s3
               run: |
-                aws s3 cp lambda_function.py.zip s3://amzn-s3-demo-bucket/gpt-assignment-1
+                aws s3 cp lambda_function.py.zip s3://gpt-assignment-1
 
             - name: updating lambda
               run: |
